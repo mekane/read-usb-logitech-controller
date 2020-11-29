@@ -59,6 +59,8 @@ const button_8_mask = 0x08;
 
 const button_9_mask = 0x10;
 const button_10_mask = 0x20;
+const button_11_mask = 0x40;
+const button_12_mask = 0x80;
 
 const dpad_mask = 0x0f;
 
@@ -93,7 +95,9 @@ function convertByteArrayToState(byte) {
         button7: !!(button2 & button_7_mask),
         button8: !!(button2 & button_8_mask),
         button9: !!(button2 & button_9_mask),
-        button10: !!(button2 & button_10_mask)
+        button10: !!(button2 & button_10_mask),
+        button11: !!(button2 & button_11_mask),
+        button12: !!(button2 & button_12_mask)
     }
 }
 
