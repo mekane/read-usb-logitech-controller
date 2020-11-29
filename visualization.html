@@ -269,6 +269,138 @@
     }
 
     startServerConnection();
+    addManualDebugging();
+
+    function addManualDebugging() {
+        document.addEventListener('keydown', e => {
+            switch (e.key) {
+                case '1':
+                    button1.classList.add('active');
+                    break;
+                case '2':
+                    button2.classList.add('active');
+                    break;
+                case '3':
+                    button3.classList.add('active');
+                    break;
+                case '4':
+                    button4.classList.add('active');
+                    break;
+                case '5':
+                    button5.classList.add('active');
+                    break;
+                case '6':
+                    button6.classList.add('active');
+                    break;
+                case '7':
+                    button7.classList.add('active');
+                    break;
+                case '8':
+                    button8.classList.add('active');
+                    break;
+                case '9':
+                    button9.classList.add('active');
+                    break;
+                case '0':
+                    button10.classList.add('active');
+                    break;
+                case '-':
+                    button11.classList.add('active');
+                    break;
+                case '=':
+                    button12.classList.add('active');
+                    break;
+                case'w':
+                    dpadUp.classList.add('active');
+                    break;
+                case 'e':
+                    dpadUpRight.classList.add('active');
+                    break;
+                case 'd':
+                    dpadRight.classList.add('active');
+                    break;
+                case 'c':
+                    dpadRightDown.classList.add('active');
+                    break;
+                case 'x':
+                    dpadDown.classList.add('active');
+                    break;
+                case 'z':
+                    dpadLeftDown.classList.add('active');
+                    break;
+                case 'a':
+                    dpadLeft.classList.add('active');
+                    break;
+                case 'q':
+                    dpadLeftUp.classList.add('active');
+                    break;
+            }
+        });
+        document.addEventListener('keyup', e => {
+            switch (e.key) {
+                case '1':
+                    button1.classList.remove('active');
+                    break;
+                case '2':
+                    button2.classList.remove('active');
+                    break;
+                case '3':
+                    button3.classList.remove('active');
+                    break;
+                case '4':
+                    button4.classList.remove('active');
+                    break;
+                case '5':
+                    button5.classList.remove('active');
+                    break;
+                case '6':
+                    button6.classList.remove('active');
+                    break;
+                case '7':
+                    button7.classList.remove('active');
+                    break;
+                case '8':
+                    button8.classList.remove('active');
+                    break;
+                case '9':
+                    button9.classList.remove('active');
+                    break;
+                case '0':
+                    button10.classList.remove('active');
+                    break;
+                case '-':
+                    button11.classList.remove('active');
+                    break;
+                case '=':
+                    button12.classList.remove('active');
+                    break;
+                case'w':
+                    dpadUp.classList.remove('active');
+                    break;
+                case 'e':
+                    dpadUpRight.classList.remove('active');
+                    break;
+                case 'd':
+                    dpadRight.classList.remove('active');
+                    break;
+                case 'c':
+                    dpadRightDown.classList.remove('active');
+                    break;
+                case 'x':
+                    dpadDown.classList.remove('active');
+                    break;
+                case 'z':
+                    dpadLeftDown.classList.remove('active');
+                    break;
+                case 'a':
+                    dpadLeft.classList.remove('active');
+                    break;
+                case 'q':
+                    dpadLeftUp.classList.remove('active');
+                    break;
+            }
+        });
+    }
 </script>
 
 </body>
