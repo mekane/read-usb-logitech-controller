@@ -1,10 +1,15 @@
 const usb = require('usb');
 
-const {findLogitechController} = require('./src/device.js');
+const {findLogitechController} = require('../device.js');
 
-main();
+const logitechInEndpointAddress = 129;
 
-async function main() {
+let usbInterface = null;
+let subscribedEndpoint = null;
+
+const closeEndpoints = true;
+
+async function subscribeToControllerEvents(callback) {
     const devices = usb.getDeviceList();
     const controller = await findLogitechController(devices);
 
@@ -13,37 +18,34 @@ async function main() {
         process.exit(0);
     }
 
-    openInterface(controller.interfaces[0]);
+    usbInterface = controller.interfaces[0];
+    usbInterface.claim();
+
+
+    function dataReceived(byteBuffer) {
+        console.log(byteBuffer);
+        const bytes = Array.prototype.slice.call(new Uint8Array(byteBuffer, 0, 8));
+        const state = convertByteArrayToState(bytes);
+        callback(state);
+    }
+
+    subscribedEndpoint = usbInterface.endpoint(logitechInEndpointAddress);
+    subscribedEndpoint.on('data', dataReceived);
+    subscribedEndpoint.startPoll();
+
+    console.log('start poll')
 }
 
+function cancel() {
+    if (subscribedEndpoint !== null)
+        subscribedEndpoint.stopPoll();
 
-const logitechInEndpointAddress = 129;
-const closeEndpoints = true;
-
-function openInterface(usbInterface) {
-    usbInterface.claim();
-    //console.log(`Claimed Interface. Driver Active: ${usbInterface.isKernelDriverActive()}`);
-
-    const endpoint = usbInterface.endpoint(logitechInEndpointAddress);
-
-    endpoint.on('data', dataReceived);
-    endpoint.startPoll();
-
-    /*
-    //TODO: call when done
-    endpoint.stopPoll();
     usbInterface.release(closeEndpoints, err => {
         if (err)
             console.log(err)
     });
-     */
 }
 
-function dataReceived(byteBuffer) {
-    //console.log(byteBuffer);
-    const bytes = Array.prototype.slice.call(new Uint8Array(byteBuffer, 0, 8));
-    update(bytes);
-}
 
 const button_1_mask = 0x10;
 const button_2_mask = 0x20;
@@ -62,7 +64,7 @@ const dpad_mask = 0x0f;
 
 const dPadDir = ['Up', 'Up-Right', 'Right', 'Down-Right', 'Down', 'Down-Left', 'Left', 'Up-Left', '-'];
 
-function update(byte) {
+function convertByteArrayToState(byte) {
     const leftH = byte[0] - 128;
     const leftV = byte[1] - 128;
     const rightH = byte[2] - 128;
@@ -76,7 +78,7 @@ function update(byte) {
 
     //const mode = byte[6]; //68 = normal, 76 = swap D-Pad and Left Stick
 
-    const state = {
+    return {
         leftH,
         leftV,
         rightH,
@@ -93,6 +95,9 @@ function update(byte) {
         button9: !!(button2 & button_9_mask),
         button10: !!(button2 & button_10_mask)
     }
+}
 
-    console.log(state);
+module.exports = {
+    subscribeToControllerEvents,
+    cancel
 }

@@ -2,7 +2,7 @@
   "name": "usb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/logitechController/index.js",
   "dependencies": {
     "usb": "^1.6.3"
   },
