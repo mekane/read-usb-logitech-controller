@@ -40,7 +40,7 @@ function openInterface(usbInterface) {
 }
 
 function dataReceived(byteBuffer) {
-    console.log(byteBuffer);
+    //console.log(byteBuffer);
     const bytes = Array.prototype.slice.call(new Uint8Array(byteBuffer, 0, 8));
     update(bytes);
 }
@@ -74,7 +74,7 @@ function update(byte) {
     const dPadValue = button1 & dpad_mask;
     const dPad = dPadDir[dPadValue];
 
-    const mode = byte[6];
+    //const mode = byte[6]; //68 = normal, 76 = swap D-Pad and Left Stick
 
     const state = {
         leftH,
