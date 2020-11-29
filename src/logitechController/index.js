@@ -23,7 +23,7 @@ async function subscribeToControllerEvents(callback) {
 
 
     function dataReceived(byteBuffer) {
-        console.log(byteBuffer);
+        //console.log(byteBuffer);
         const bytes = Array.prototype.slice.call(new Uint8Array(byteBuffer, 0, 8));
         const state = convertByteArrayToState(bytes);
         callback(state);
@@ -33,7 +33,7 @@ async function subscribeToControllerEvents(callback) {
     subscribedEndpoint.on('data', dataReceived);
     subscribedEndpoint.startPoll();
 
-    console.log('start poll')
+    console.log('Listening for USB Inputs')
 }
 
 function cancel() {
